@@ -61,7 +61,7 @@
   - Да поддържа lazy / eager loading
 
 - ВОТ
-  - CI pipeline с автоматично build-ване и тестване
+  - CI/CD pipeline с автоматично build-ване и тестване
   - Да изпраща известие при неуспешен build
   - Да бъде контейнеризирана чрез Docker
   - Да бъде оркестрирана в Kubernetes Cluster
