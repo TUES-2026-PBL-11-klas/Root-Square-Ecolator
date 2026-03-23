@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ecolator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="header">
+  <div class="menu-container">
+    <button id="menuButton" class="menu-button">☰</button>
+    <div id="dropdownMenu" class="dropdown hidden">
+      <a href="#">Home</a>
+      <a href="#">Add Information</a>
+    </div>
+  </div>
+
+  <h1>Ecolator</h1>
+
+  <div class="account-container">
+    <button id="accountButton" class="account-button">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f2efe6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 21v-2a4 4 0 0 0-3-3.87"></path>
+        <path d="M4 21v-2a4 4 0 0 1 3-3.87"></path>
+        <circle cx="12" cy="7" r="4"></circle>
+      </svg>
+    </button>
+
+    <div id="accountMenu" class="dropdown hidden">
+      <a href="#">Check Information</a>
+      <a href="#">Log Out</a>
+    </div>
+  </div>
+</header>
+
+  <main>
+    <section class="form-section">
+      <h2>Enter Your Data</h2>
+      <form id="footprintForm">
+        <label>
+          Transport (km/month):
+          <input type="number" id="transportKm" required>
+        </label>
+
+        <label>
+          Diet:
+          <select id="diet">
+            <option value="omnivore">Omnivore</option>
+            <option value="vegetarian">Vegetarian</option>
+            <option value="vegan">Vegan</option>
+          </select>
+        </label>
+
+        <label>
+          Electricity (kWh/month):
+          <input type="number" id="electricityKwh" required>
+        </label>
+
+        <button type="submit">Calculate Footprint</button>
+      </form>
+    </section>
+
+    <section class="result-section" id="resultSection">
+      <h2>Your Carbon Footprint:</h2>
+      <p id="co2Result"></p>
+      <p id="ecoResult"></p>
+      <h3>Recommendations:</h3>
+      <ul id="recommendations"></ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>Ecolator &copy; 2026</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
