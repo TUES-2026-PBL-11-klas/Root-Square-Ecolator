@@ -171,3 +171,51 @@ footer {
 .account-button:hover {
   opacity: 0.8;
 }
+
+.light-text {
+  color: #f2efe6;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.get-started-section {
+  display: flex;
+  justify-content: center;
+  margin: 3rem 0;
+}
+
+#getStartedButton {
+  font-size: 1.4rem;
+  padding: 1rem 2rem;
+  border-radius: 25px;
+  background: linear-gradient(to bottom, #7aa66b, #5f8f57);
+  color: #f2efe6;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  transition: all 0.2s ease;
+}
+
+#getStartedButton:hover {
+  background: linear-gradient(to bottom, #6f9c61, #557548);
+}
+
+.stats-section {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin: 2rem auto;
+  max-width: 900px;
+}
+
+.stat-card {
+  background: linear-gradient(to bottom, #e8e1cf, #d6cbb2);
+  padding: 1.5rem;
+  margin: 1rem;
+  border-radius: 16px;
+  max-width: 250px;
+  text-align: center;
+  box-shadow:
+    0 6px 12px rgba(0,0,0,0.3),
+    inset 0 2px 4px rgba(255,255,255,0.2);
+  border: 1px solid #b8a98a;
+}

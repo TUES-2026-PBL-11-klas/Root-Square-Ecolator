@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ecolator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1 class="light-text">Ecolator</h1>
+  </header>
+
+  <main>
+    <!-- Top Graphics / Stats -->
+    <section class="stats-section">
+      <div class="stat-card light-text">
+        <h3>Average Carbon Footprint</h3>
+        <p>4.5 t CO₂/year</p>
+      </div>
+      <div class="stat-card light-text">
+        <h3>Average Daily Water Use</h3>
+        <p>150 L/day</p>
+      </div>
+      <div class="stat-card light-text">
+        <h3>Average Energy Use</h3>
+        <p>250 kWh/month</p>
+      </div>
+    </section>
+
+    <!-- Get Started Button -->
+    <section class="get-started-section">
+      <button id="getStartedButton">Get Started</button>
+    </section>
+
+    <!-- Bottom Graphics / Linear Diagram -->
+    <section class="linear-diagram-section">
+      <h3 class="light-text">Your Carbon Footprint Over Months</h3>
+      <div class="linear-diagram">
+        <div class="bar" id="bar" style="width: 0%;"></div>
+      </div>
+      <input type="range" min="0" max="11" value="0" id="monthSlider">
+      <p class="light-text">
+        Month: <span id="monthValue">January</span>, CO₂: <span id="co2Value">0 kg</span>
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <p class="light-text">Ecolator &copy; 2026</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
