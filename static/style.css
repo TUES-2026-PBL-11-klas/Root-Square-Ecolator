@@ -1,0 +1,304 @@
+/* ─── Reset ─── */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ─── Layout Fix (IMPORTANT) ─── */
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to bottom, #3a5f3a 0%, #2b1500 100%);
+  display: flex;
+  flex-direction: column;
+  color: #3e3e3e;
+}
+
+main {
+  flex: 1;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* ─── Header ─── */
+header {
+  background: linear-gradient(to bottom, #5f9c6f, #4a7c59);
+  color: #f2efe6;
+  text-align: center;
+  padding: 1.5rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+  border-bottom: 4px solid #3b5a40;
+}
+
+/* Header layout (menu + title + account) */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.menu-container {
+  position: absolute;
+  left: 20px;
+}
+
+.account-container {
+  position: absolute;
+  right: 20px;
+}
+
+/* ─── Buttons ─── */
+button {
+  background: linear-gradient(to bottom, #7aa66b, #5f8f57);
+  color: #f2efe6;
+  padding: 0.7rem 1.4rem;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+  transition: all 0.2s ease;
+}
+
+button:hover {
+  background: linear-gradient(to bottom, #6f9c61, #557548);
+}
+
+/* Special buttons */
+.menu-button,
+.account-button {
+  font-size: 22px;
+  background: none;
+  border: none;
+  color: #f2efe6;
+  cursor: pointer;
+}
+
+.menu-button:hover,
+.account-button:hover {
+  opacity: 0.8;
+}
+
+/* ─── Dropdown Menus ─── */
+.dropdown {
+  position: absolute;
+  top: 45px;
+  background: linear-gradient(to bottom, #e8e1cf, #d6cbb2);
+  border-radius: 10px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+  min-width: 160px;
+  border: 1px solid #b8a98a;
+
+  transform: translateY(-10px);
+  opacity: 0;
+  pointer-events: none;
+
+  transition: all 0.2s ease;
+  z-index: 1000;
+  padding: 6px;
+}
+
+.menu-container .dropdown { left: 0; }
+.account-container .dropdown { right: 0; }
+
+.dropdown.active {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Dropdown items */
+.dropdown a {
+  display: block;
+  padding: 12px 16px;
+  color: #3e3e3e;
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.dropdown a:hover {
+  background: linear-gradient(to bottom, #d6cbb2, #cbbf9f);
+}
+
+.dropdown a:not(:last-child) {
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+/* ─── Stats Section ─── */
+.stats-section {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin: 2rem auto;
+}
+
+.stat-card {
+  background: linear-gradient(to bottom, #e8e1cf, #d6cbb2);
+  padding: 1.5rem;
+  margin: 1rem;
+  border-radius: 16px;
+  max-width: 250px;
+  text-align: center;
+
+  box-shadow:
+    0 6px 12px rgba(0,0,0,0.3),
+    inset 0 2px 4px rgba(255,255,255,0.2);
+
+  border: 1px solid #b8a98a;
+}
+
+/* ─── Get Started Button ─── */
+.get-started-section {
+  display: flex;
+  justify-content: center;
+  margin: 3rem 0;
+}
+
+#getStartedButton {
+  font-size: 1.4rem;
+  padding: 1rem 2.2rem;
+  border-radius: 25px;
+}
+
+/* ─── Linear Diagram ─── */
+.linear-diagram-section {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.linear-diagram {
+  width: 100%;
+  max-width: 500px;
+  height: 20px;
+  background: #d6cbb2;
+  border-radius: 10px;
+  margin: 1rem auto;
+  overflow: hidden;
+}
+
+.bar {
+  height: 100%;
+  background: linear-gradient(to right, #7aa66b, #5f8f57);
+  width: 0%;
+  transition: width 0.3s ease;
+}
+
+/* ─── Form & Results ─── */
+.form-section,
+.result-section {
+  background: linear-gradient(to bottom, #e8e1cf, #d6cbb2);
+  padding: 1.8rem;
+  margin: 2rem auto;
+  border-radius: 16px;
+  max-width: 520px;
+
+  box-shadow:
+    0 8px 20px rgba(0,0,0,0.3),
+    inset 0 2px 4px rgba(255,255,255,0.2);
+
+  border: 1px solid #b8a98a;
+}
+
+label {
+  display: block;
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+input, select {
+  width: 100%;
+  padding: 0.6rem;
+  margin-top: 0.3rem;
+  border: 1px solid #a78c5f;
+  border-radius: 6px;
+  background-color: #f5f1e6;
+}
+
+input:focus, select:focus {
+  outline: none;
+  border-color: #6a8f5b;
+  box-shadow: 0 0 5px rgba(106, 143, 91, 0.5);
+}
+
+/* ─── Footer ─── */
+footer {
+  text-align: center;
+  padding: 1.5rem;
+  color: #f2efe6;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  margin-top: auto;
+}
+
+/* ─── Text ─── */
+.light-text-h {
+  color: #1c1b18;
+  text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+}
+
+.light-text {
+  color: #f2efe6;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+}
+
+.percentile-wrapper {
+  margin-top: 1.5rem;
+}
+
+.percentile-scale {
+  position: relative;
+  width: 100%;
+  height: 20px;
+  border-radius: 999px;
+  background: linear-gradient(to right, #6f9c61, #cbbf9f, #8b4f2b);
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.25);
+  margin-bottom: 0.7rem;
+}
+
+.percentile-marker {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #f2efe6;
+  border: 3px solid #2b1500;
+  box-shadow: 0 0 8px rgba(0,0,0,0.25);
+}
+
+.percentile-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  color: #3b5a40;
+  font-weight: 600;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 768px) {
+  .stats-section {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .stat-card {
+    max-width: 90%;
+  }
+
+  main {
+    padding: 1rem;
+  }
+
+  #getStartedButton {
+    width: 80%;
+  }
+}
