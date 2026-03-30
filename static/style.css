@@ -239,9 +239,48 @@ footer {
 }
 
 /* ─── Text ─── */
+.light-text-h {
+  color: #1c1b18;
+  text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+}
+
 .light-text {
   color: #f2efe6;
   text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+}
+
+.percentile-wrapper {
+  margin-top: 1.5rem;
+}
+
+.percentile-scale {
+  position: relative;
+  width: 100%;
+  height: 20px;
+  border-radius: 999px;
+  background: linear-gradient(to right, #6f9c61, #cbbf9f, #8b4f2b);
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.25);
+  margin-bottom: 0.7rem;
+}
+
+.percentile-marker {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #f2efe6;
+  border: 3px solid #2b1500;
+  box-shadow: 0 0 8px rgba(0,0,0,0.25);
+}
+
+.percentile-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  color: #3b5a40;
+  font-weight: 600;
 }
 
 /* ─── Responsive ─── */
