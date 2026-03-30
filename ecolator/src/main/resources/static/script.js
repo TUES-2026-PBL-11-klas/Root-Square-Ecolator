@@ -5,51 +5,43 @@
 const footprintForm = document.getElementById("footprintForm");
 
 if (footprintForm) {
-  footprintForm.addEventListener("submit", function (e) {
+  footprintForm.addEventListener("submit", async function (e) {
     e.preventDefault();
 
-    const transportKm = parseFloat(document.getElementById("transportKm").value);
+    const cityTransportKm = parseFloat(document.getElementById("cityTransportKm").value);
+    const outsideCityTransportKm = parseFloat(document.getElementById("outsideCityTransportKm").value);
     const diet = document.getElementById("diet").value;
     const electricityKwh = parseFloat(document.getElementById("electricityKwh").value);
 
-    const co2 = (transportKm * 0.21) + (electricityKwh * 0.5);
-    const eco = co2 / 1000;
+    const requestData = {
+      cityTransportKm,
+      outsideCityTransportKm,
+      diet,
+      electricityKwh
+    };
 
-    const recs = [];
+    try {
+      const response = await fetch("http://localhost:8080/api/emissions/calculate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(requestData)
+      });
 
-    if (transportKm > 100) {
-      recs.push("Consider using public transport or biking more often.");
+      if (!response.ok) {
+        throw new Error("Failed to calculate emissions.");
+      }
+
+      const result = await response.json();
+
+      sessionStorage.setItem("ecolatorFeedback", JSON.stringify(result));
+      window.location.href = "feedback.html";
+
+    } catch (error) {
+      console.error(error);
+      alert("Could not connect to the backend.");
     }
-
-    if (diet === "omnivore") {
-      recs.push("Try reducing meat consumption.");
-    }
-
-    if (electricityKwh > 200) {
-      recs.push("Use energy-efficient appliances.");
-    }
-
-    if (recs.length === 0) {
-      recs.push("Great job — your lifestyle already has a relatively low environmental impact.");
-    }
-
-    /* Simple percentile model */
-    let percentile = Math.round((co2 / 200) * 100);
-
-    if (percentile < 1) percentile = 1;
-    if (percentile > 99) percentile = 99;
-
-    sessionStorage.setItem(
-      "ecolatorFeedback",
-      JSON.stringify({
-        co2,
-        eco,
-        recommendations: recs,
-        percentile
-      })
-    );
-
-    window.location.href = "feedback.html";
   });
 }
 
