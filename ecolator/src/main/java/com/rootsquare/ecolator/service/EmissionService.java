@@ -52,6 +52,8 @@ public class EmissionService {
         if (percentile < 1) percentile = 1;
         if (percentile > 99) percentile = 99;
 
+        System.out.println("Calculated CO2: " + totalCo2 + " kg/year, Eco: " + eco + ", Percentile: " + percentile);
+
         return new EmissionResponse(totalCo2, eco, percentile, recommendations);
     }
 
