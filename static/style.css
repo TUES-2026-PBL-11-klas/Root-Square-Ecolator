@@ -12,7 +12,7 @@ html, body {
 
 body {
   font-family: Arial, sans-serif;
-  background: linear-gradient(to bottom, #3a5f3a 0%, #2b1500 100%);
+  background: linear-gradient(to bottom, #77ad78 0%, #564138 80%);
   display: flex;
   flex-direction: column;
   color: #3e3e3e;
@@ -28,7 +28,7 @@ main {
 
 /* ─── Header ─── */
 header {
-  background: linear-gradient(to bottom, #5f9c6f, #4a7c59);
+  background: linear-gradient(to bottom, #5f9c6f 0%, #4a7c59 70%);
   color: #f2efe6;
   text-align: center;
   padding: 1.5rem;
@@ -56,7 +56,7 @@ header {
 
 /* ─── Buttons ─── */
 button {
-  background: linear-gradient(to bottom, #7aa66b, #5f8f57);
+  background: linear-gradient(to bottom, #1985a1, #10768f);
   color: #f2efe6;
   padding: 0.7rem 1.4rem;
   border: none;
@@ -64,11 +64,11 @@ button {
   cursor: pointer;
   font-weight: bold;
   box-shadow: 0 3px 6px rgba(0,0,0,0.3);
-  transition: all 0.2s ease;
+  transition: all 0.2s ease-in;
 }
 
 button:hover {
-  background: linear-gradient(to bottom, #6f9c61, #557548);
+  background: linear-gradient(to bottom, #0a5e73, #09576b);
 }
 
 /* Special buttons */
@@ -187,7 +187,7 @@ button:hover {
 
 .bar {
   height: 100%;
-  background: linear-gradient(to right, #7aa66b, #5f8f57);
+  background: linear-gradient(to right, #1985a1, #10768f);
   width: 0%;
   transition: width 0.3s ease;
 }
