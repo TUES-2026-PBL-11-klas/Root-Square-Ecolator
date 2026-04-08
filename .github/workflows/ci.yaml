@@ -44,3 +44,9 @@ jobs:
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/eco-impact:${{ steps.version.outputs.VERSION }}
             ${{ secrets.DOCKERHUB_USERNAME }}/eco-impact:latest
+
+      - name: Deploy Helm chart
+        run: |
+          helm upgrade ecolator ./ecolator-chart -n ecolator --install \
+            --set dockerHubUsername=${{ secrets.DOCKERHUB_USERNAME }} \
+            --set ecoImpact.tag=${{ steps.version.outputs.VERSION }}
