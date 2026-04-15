@@ -2,8 +2,6 @@ name: Build & Push Eco-Impact Image
 
 on:
   push:
-    branches:
-      - emissions-calculator
   workflow_dispatch:
 
 jobs:

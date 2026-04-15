@@ -2,8 +2,6 @@ name: Build & Push AI-API Image
 
 on:
   push:
-    branches:
-      - AI-car-fuel-consumption
   workflow_dispatch:
 
 jobs:
