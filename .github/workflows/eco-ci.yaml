@@ -47,7 +47,6 @@ jobs:
         with:
           ref: docker-k8s
           path: docker-k8s
-          token: ${{ secrets.GH_PAT }}
 
       - name: Install yq
         run: |
