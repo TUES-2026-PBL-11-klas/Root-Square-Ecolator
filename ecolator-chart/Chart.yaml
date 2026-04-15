@@ -1,6 +1,18 @@
 apiVersion: v2
-name: ecolator-chart
-description: Helm chart for Ecolator microservices
+name: ecolator
+description: Umbrella chart for all Ecolator microservices
 type: application
 version: 0.1.0
-appVersion: "1.0.0"
+
+dependencies:
+  - name: eco-impact
+    version: 0.1.0
+    repository: "file://charts/eco-impact"
+
+  - name: ai-api
+    version: 0.1.0
+    repository: "file://charts/ai-api"
+
+  - name: iam
+    version: 0.1.0
+    repository: "file://charts/iam"
