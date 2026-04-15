@@ -25,16 +25,3 @@ aiApi:
     limits:
       cpu: 500m
       memory: 512Mi
-
-iam:
-  image: iam-service
-  tag: v1.0.0
-  replicas: 2
-  port: 8082
-  resources:
-    requests:
-      cpu: 250m
-      memory: 256Mi
-    limits:
-      cpu: 500m
-      memory: 512Mi  

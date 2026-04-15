@@ -36,18 +36,18 @@ jobs:
       - name: Build & Push Docker image
         uses: docker/build-push-action@v5
         with:
-          context: ./ecolator
-          file: ./ecolator/Dockerfile
+          context: .
+          file: ./Dockerfile
           push: true
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/eco-impact:${{ steps.version.outputs.VERSION }}
             ${{ secrets.DOCKERHUB_USERNAME }}/eco-impact:latest
 
       - name: Lint Helm chart
-        run: helm lint ./emissions-chart
+        run: helm lint ./ecolator-chart/charts/eco-impact
 
       - name: Render Helm chart
         run: |
-          helm template emissions ./emissions-chart \
+          helm template eco-impact ./ecolator-chart/charts/eco-impact \
             --set dockerHubUsername=${{ secrets.DOCKERHUB_USERNAME }} \
             --set ecoImpact.image.tag=${{ steps.version.outputs.VERSION }}

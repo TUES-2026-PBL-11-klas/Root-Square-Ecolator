@@ -1,18 +1,14 @@
 apiVersion: v2
 name: ecolator
-description: Umbrella chart for all Ecolator microservices
+description: Umbrella chart for All Ecolator Microservices
 type: application
 version: 0.1.0
 
 dependencies:
-  - name: eco-impact
+  - name: ecoImpact
     version: 0.1.0
     repository: "file://charts/eco-impact"
 
-  - name: ai-api
+  - name: aiApi
     version: 0.1.0
     repository: "file://charts/ai-api"
-
-  - name: iam
-    version: 0.1.0
-    repository: "file://charts/iam"
