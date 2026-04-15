@@ -39,6 +39,9 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      - name: Set up Helm
+        uses: azure/setup-helm@v4
+
       - name: Build & Push Docker image
         uses: docker/build-push-action@v5
         with:
@@ -52,8 +55,11 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - name: Deploy Helm chart
+      - name: Lint Helm chart
+        run: helm lint ./emissions-chart
+
+      - name: Render Helm chart
         run: |
-          helm upgrade emissions ./emissions-chart -n ecolator --install \
+          helm template emissions ./emissions-chart -n ecolator \
             --set dockerHubUsername=${{ secrets.DOCKERHUB_USERNAME }} \
             --set ecoImpact.image.tag=${{ steps.version.outputs.VERSION }}
