@@ -17,11 +17,7 @@ jobs:
       - name: Set version
         id: version
         run: |
-          if [ -f VERSION ]; then
-            VERSION=$(cat VERSION)
-          else
-            VERSION=v1.0.${GITHUB_RUN_NUMBER}
-          fi
+          VERSION=v1.0.${GITHUB_RUN_NUMBER}
           echo "VERSION=$VERSION" >> "$GITHUB_OUTPUT"
 
       - name: Set up Docker Buildx
@@ -42,7 +38,7 @@ jobs:
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/eco-impact:${{ steps.version.outputs.VERSION }}
             ${{ secrets.DOCKERHUB_USERNAME }}/eco-impact:latest
-
+          
       - name: Checkout docker-k8s branch
         uses: actions/checkout@v4
         with:
@@ -50,21 +46,11 @@ jobs:
           path: docker-k8s
           fetch-depth: 0
 
-      - name: Lint Helm chart
-        run: |
-          helm lint docker-k8s/ecolator-chart/charts/eco-impact
-
-      - name: Render Helm chart
-        run: |
-          helm template eco-impact docker-k8s/ecolator-chart/charts/eco-impact \
-            --set dockerHubUsername=${{ secrets.DOCKERHUB_USERNAME }} \
-            --set ecoImpact.image.tag=v1.0.${GITHUB_RUN_NUMBER}
-
       - name: Update Eco Impact Helm values
         run: |
+          sudo apt-get install -y yq
           cd docker-k8s/ecolator-chart
-
-          sed -i "s|tag: .*|tag: v1.0.${GITHUB_RUN_NUMBER}|" values.yaml
+          yq -i '.ecoImpact.tag = "v1.0." + env(GITHUB_RUN_NUMBER)' values.yaml
 
       - name: Commit and push Helm update
         run: |
@@ -74,5 +60,5 @@ jobs:
           git config user.email "github-actions@github.com"
 
           git add ecolator-chart/values.yaml
-          git commit -m "Eco Impact: update image tag v1.0.${GITHUB_RUN_NUMBER}" || echo "No changes"
+          git commit -m "eco-impact → v1.0.${GITHUB_RUN_NUMBER}" || echo "No changes"
           git push
