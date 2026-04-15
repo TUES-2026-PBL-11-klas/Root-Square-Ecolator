@@ -54,6 +54,6 @@ jobs:
 
       - name: Deploy Helm chart
         run: |
-          helm upgrade ecolator ./ecolator-chart -n ecolator --install \
+          helm upgrade emissions ./emissions-chart -n ecolator --install \
             --set dockerHubUsername=${{ secrets.DOCKERHUB_USERNAME }} \
-            --set ecoImpact.tag=${{ steps.version.outputs.VERSION }}
+            --set ecoImpact.image.tag=${{ steps.version.outputs.VERSION }}
