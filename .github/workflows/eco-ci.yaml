@@ -73,7 +73,3 @@ jobs:
           git add ecolator-chart/values.yaml
           git commit -m "eco-impact → v1.0.${GITHUB_RUN_NUMBER}" || echo "No changes"
           git push
-
-      - name: Deploy to Kubernetes Cluster (Docker Desktop)
-        run: |
-          helm upgrade --install ecolator docker-k8s/ecolator-chart -n ecolator
