@@ -7,8 +7,8 @@ version: 0.1.0
 dependencies:
   - name: ecoImpact
     version: 0.1.0
-    repository: "file://charts/eco-impact"
+    repository: "file://charts/ecoImpact"
 
   - name: aiApi
     version: 0.1.0
-    repository: "file://charts/ai-api"
+    repository: "file://charts/aiApi"

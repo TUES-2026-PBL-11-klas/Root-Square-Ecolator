@@ -1,0 +1,14 @@
+dockerHubUsername: viktorsirakov08
+
+aiApi:
+  image: ai-api
+  tag: v1.0.0
+  replicas: 2
+  port: 8081
+  resources:
+    requests:
+      cpu: 200m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi

@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eco-impact
+  namespace: ecolator
+spec:
+  replicas: {{ .Values.ecoImpact.replicas }}
+  selector:
+    matchLabels:
+      app: eco-impact
+  template:
+    metadata:
+      labels:
+        app: eco-impact
+    spec:
+      containers:
+        - name: eco-impact
+          image: "{{ .Values.dockerHubUsername }}/{{ .Values.ecoImpact.image.repository }}:{{ .Values.ecoImpact.image.tag }}"
+          ports:
+            - containerPort: {{ .Values.ecoImpact.port }}
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: "k8s"
+          resources:
+            requests:
+              cpu: {{ .Values.ecoImpact.resources.requests.cpu }}
+              memory: {{ .Values.ecoImpact.resources.requests.memory }}
+            limits:
+              cpu: {{ .Values.ecoImpact.resources.limits.cpu }}
+              memory: {{ .Values.ecoImpact.resources.limits.memory }}
