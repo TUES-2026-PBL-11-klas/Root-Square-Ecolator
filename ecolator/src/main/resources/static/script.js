@@ -3,18 +3,118 @@
 ------------------------------ */
 
 const footprintForm = document.getElementById("footprintForm");
+const wizardSteps = Array.from(document.querySelectorAll(".wizard-step"));
+const wizardIndicators = Array.from(document.querySelectorAll("[data-step-indicator]"));
+const prevStepButton = document.getElementById("prevStepButton");
+const nextStepButton = document.getElementById("nextStepButton");
+const submitWizardButton = document.getElementById("submitWizardButton");
+const fuelUsageFields = document.getElementById("fuelUsageFields");
+const fuelUsageInputs = fuelUsageFields ? Array.from(fuelUsageFields.querySelectorAll("input")) : [];
+const fuelUsageRadios = Array.from(document.querySelectorAll('input[name="knowsFuelUsage"]'));
+let currentStepIndex = 0;
+
+function updateFuelUsageVisibility() {
+  if (!fuelUsageFields) {
+    return;
+  }
+
+  const selectedFuelKnowledge = document.querySelector('input[name="knowsFuelUsage"]:checked')?.value;
+  const knowsFuelUsage = selectedFuelKnowledge === "yes";
+
+  fuelUsageFields.classList.toggle("hidden", !knowsFuelUsage);
+
+  fuelUsageInputs.forEach((input) => {
+    input.required = knowsFuelUsage;
+
+    if (!knowsFuelUsage) {
+      input.value = "";
+    }
+  });
+}
+
+function renderWizardStep() {
+  wizardSteps.forEach((step, index) => {
+    step.classList.toggle("active", index === currentStepIndex);
+  });
+
+  wizardIndicators.forEach((indicator, index) => {
+    indicator.classList.toggle("active", index === currentStepIndex);
+    indicator.classList.toggle("completed", index < currentStepIndex);
+  });
+
+  if (prevStepButton) {
+    prevStepButton.classList.toggle("hidden", currentStepIndex === 0);
+  }
+
+  if (nextStepButton) {
+    nextStepButton.classList.toggle("hidden", currentStepIndex === wizardSteps.length - 1);
+  }
+
+  if (submitWizardButton) {
+    submitWizardButton.classList.toggle("hidden", currentStepIndex !== wizardSteps.length - 1);
+  }
+}
+
+function validateCurrentStep() {
+  const currentStep = wizardSteps[currentStepIndex];
+
+  if (!currentStep) {
+    return true;
+  }
+
+  const fields = Array.from(currentStep.querySelectorAll("input, select, textarea"));
+  return fields.every((field) => {
+    if (field.closest(".hidden")) {
+      return true;
+    }
+
+    return field.reportValidity();
+  });
+}
 
 if (footprintForm) {
+  renderWizardStep();
+  updateFuelUsageVisibility();
+
+  nextStepButton?.addEventListener("click", () => {
+    if (!validateCurrentStep()) {
+      return;
+    }
+
+    currentStepIndex += 1;
+    renderWizardStep();
+  });
+
+  prevStepButton?.addEventListener("click", () => {
+    currentStepIndex -= 1;
+    renderWizardStep();
+  });
+
+  fuelUsageRadios.forEach((radio) => {
+    radio.addEventListener("change", updateFuelUsageVisibility);
+  });
+
   footprintForm.addEventListener("submit", async function (e) {
     e.preventDefault();
 
+    if (!validateCurrentStep()) {
+      return;
+    }
+
     const cityTransportKm = parseFloat(document.getElementById("cityTransportKm").value);
     const outsideCityTransportKm = parseFloat(document.getElementById("outsideCityTransportKm").value);
-    const cityFuelLitersPer100Km = parseFloat(document.getElementById("cityFuelLitersPer100Km").value);
-    const outsideCityFuelLitersPer100Km = parseFloat(document.getElementById("outsideCityFuelLitersPer100Km").value);
+    const selectedFuelKnowledge = document.querySelector('input[name="knowsFuelUsage"]:checked')?.value;
+    const knowsFuelUsage = selectedFuelKnowledge === "yes";
+    const cityFuelLitersPer100Km = knowsFuelUsage
+      ? parseFloat(document.getElementById("cityFuelLitersPer100Km").value)
+      : 0;
+    const outsideCityFuelLitersPer100Km = knowsFuelUsage
+      ? parseFloat(document.getElementById("outsideCityFuelLitersPer100Km").value)
+      : 0;
     const fuelType = document.getElementById("fuelType").value;
     const diet = document.getElementById("diet").value;
     const electricityKwh = parseFloat(document.getElementById("electricityKwh").value);
+    const chatbotPrompt = document.getElementById("chatbotPrompt").value.trim();
 
     const requestData = {
       cityTransportKm,
@@ -42,7 +142,8 @@ if (footprintForm) {
       const result = await response.json();
 
       sessionStorage.setItem("ecolatorFeedback", JSON.stringify(result));
-      window.location.href = "feedback.html";
+      sessionStorage.setItem("ecolatorChatPrompt", chatbotPrompt);
+      window.location.href = "chatbot.html";
 
     } catch (error) {
       console.error(error);

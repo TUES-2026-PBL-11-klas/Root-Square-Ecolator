@@ -34,54 +34,107 @@
 </header>
 
   <main>
-    <section class="form-section">
-      <h2>Enter Your Data</h2>
+    <section class="form-section wizard-shell">
+      <h2>Tell Us About Your Routine</h2>
       <form id="footprintForm">
+        <div class="wizard-progress" aria-label="Form progress">
+          <div class="wizard-dot active" data-step-indicator="0">1</div>
+          <div class="wizard-dot" data-step-indicator="1">2</div>
+          <div class="wizard-dot" data-step-indicator="2">3</div>
+          <div class="wizard-dot" data-step-indicator="3">4</div>
+        </div>
 
-        <label>
-          City Transport (km/month):
-          <input type="number" id="cityTransportKm" required>
-        </label>
+        <section class="wizard-step active" data-step="0">
+          <h3>Food Habits</h3>
+          <p class="step-copy">Start with the type of food you usually eat.</p>
 
-        <label>
-          Outside-City Transport (km/month):
-          <input type="number" id="outsideCityTransportKm" required>
-        </label>
+          <label>
+            Diet:
+            <select id="diet" required>
+              <option value="omnivore">Omnivore</option>
+              <option value="vegetarian">Vegetarian</option>
+              <option value="vegan">Vegan</option>
+            </select>
+          </label>
+        </section>
 
-        <label>
-          City Car Fuel Use (L/100km):
-          <input type="number" id="cityFuelLitersPer100Km" min="0" step="0.1" required>
-        </label>
+        <section class="wizard-step" data-step="1">
+          <h3>Electricity Use</h3>
+          <p class="step-copy">Now enter the electricity you typically use in a month.</p>
 
-        <label>
-          Outside-City Car Fuel Use (L/100km):
-          <input type="number" id="outsideCityFuelLitersPer100Km" min="0" step="0.1" required>
-        </label>
+          <label>
+            Electricity (kWh/month):
+            <input type="number" id="electricityKwh" min="0" step="0.1" required>
+          </label>
+        </section>
 
-        <label>
-          Car Fuel Type:
-          <select id="fuelType">
-            <option value="petrol">Petrol</option>
-            <option value="diesel">Diesel</option>
-            <option value="lpg">LPG</option>
-          </select>
-        </label>
+        <section class="wizard-step" data-step="2">
+          <h3>Car Travel</h3>
+          <p class="step-copy">Add how far you travel and, if you know it, your car's fuel usage.</p>
 
-        <label>
-          Diet:
-          <select id="diet">
-            <option value="omnivore">Omnivore</option>
-            <option value="vegetarian">Vegetarian</option>
-            <option value="vegan">Vegan</option>
-          </select>
-        </label>
+          <div class="form-grid two-column">
+            <label>
+              City Transport (km/month):
+              <input type="number" id="cityTransportKm" min="0" step="0.1" required>
+            </label>
 
-        <label>
-          Electricity (kWh/month):
-          <input type="number" id="electricityKwh" required>
-        </label>
+            <label>
+              Outside-City Transport (km/month):
+              <input type="number" id="outsideCityTransportKm" min="0" step="0.1" required>
+            </label>
+          </div>
 
-        <button type="submit">Calculate Footprint</button>
+          <fieldset class="inline-choice">
+            <legend>Do you know your car's L/100km?</legend>
+            <label class="choice-pill">
+              <input type="radio" name="knowsFuelUsage" value="yes">
+              <span>Yes</span>
+            </label>
+            <label class="choice-pill">
+              <input type="radio" name="knowsFuelUsage" value="no" checked>
+              <span>No</span>
+            </label>
+          </fieldset>
+
+          <div id="fuelUsageFields" class="conditional-block hidden">
+            <div class="form-grid two-column">
+              <label>
+                City Car Fuel Use (L/100km):
+                <input type="number" id="cityFuelLitersPer100Km" min="0" step="0.1">
+              </label>
+
+              <label>
+                Outside-City Car Fuel Use (L/100km):
+                <input type="number" id="outsideCityFuelLitersPer100Km" min="0" step="0.1">
+              </label>
+            </div>
+          </div>
+
+          <label>
+            Fuel Type:
+            <select id="fuelType" required>
+              <option value="petrol">Petrol</option>
+              <option value="diesel">Diesel</option>
+              <option value="lpg">LPG</option>
+            </select>
+          </label>
+        </section>
+
+        <section class="wizard-step" data-step="3">
+          <h3>Ask The Chatbot</h3>
+          <p class="step-copy">Add anything extra you want to ask about your footprint. This note will not affect the calculation.</p>
+
+          <label>
+            Extra Notes For The Chatbot:
+            <textarea id="chatbotPrompt" rows="8" placeholder="For example: how can I lower my transport emissions if I commute every day?"></textarea>
+          </label>
+        </section>
+
+        <div class="wizard-actions">
+          <button type="button" id="prevStepButton" class="secondary-button hidden">Back</button>
+          <button type="button" id="nextStepButton">Next</button>
+          <button type="submit" id="submitWizardButton" class="hidden">Open Chatbot</button>
+        </div>
       </form>
     </section>
 
