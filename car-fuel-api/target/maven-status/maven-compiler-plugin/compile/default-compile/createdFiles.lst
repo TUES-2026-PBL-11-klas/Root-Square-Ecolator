@@ -1,0 +1,13 @@
+com\fuelapi\model\GroqRequest.class
+com\fuelapi\model\ClaudeResponse$ContentBlock.class
+com\fuelapi\service\FuelLookupService.class
+com\fuelapi\controller\FuelController.class
+com\fuelapi\model\ClaudeResponse.class
+com\fuelapi\CarFuelApiApplication.class
+com\fuelapi\model\FuelRequest.class
+com\fuelapi\model\GroqResponse$Message.class
+com\fuelapi\model\GroqResponse$Choice.class
+com\fuelapi\model\GroqResponse.class
+com\fuelapi\model\ClaudeRequest$Message.class
+com\fuelapi\model\ClaudeRequest.class
+com\fuelapi\model\GroqRequest$Message.class
