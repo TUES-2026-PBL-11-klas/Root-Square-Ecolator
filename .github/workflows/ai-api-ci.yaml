@@ -34,8 +34,8 @@ jobs:
       - name: Build & Push Docker image
         uses: docker/build-push-action@v5
         with:
-          context: .
-          file: ./Dockerfile
+          context: ./car-fuel-api
+          file: ./car-fuel-api/Dockerfile
           push: true
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/ai-api:${{ steps.version.outputs.VERSION }}
