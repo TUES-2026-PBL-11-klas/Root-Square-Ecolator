@@ -26,7 +26,6 @@ public class EmissionService {
                 fuelEmissionFactor
         );
         double electricityCo2 = request.getElectricityKwh() * electricityFactor;
-
         double dietCo2 = calculateDietImpact(request.getDiet());
 
         double totalCo2 = cityCo2 + outsideCityCo2 + electricityCo2 + dietCo2;
