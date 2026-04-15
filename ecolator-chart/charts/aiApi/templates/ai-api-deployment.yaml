@@ -16,6 +16,7 @@ spec:
       containers:
         - name: ai-api
           image: "{{ .Values.dockerHubUsername }}/{{ .Values.aiApi.image }}:{{ .Values.aiApi.tag }}"
+          imagePullPolicy: Always
           ports:
             - containerPort: {{ .Values.aiApi.port }}
           env:
