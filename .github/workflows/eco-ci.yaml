@@ -6,6 +6,9 @@ on:
       - emissions-calculator
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -44,7 +47,7 @@ jobs:
         with:
           ref: docker-k8s
           path: docker-k8s
-          fetch-depth: 0
+          token: ${{ secrets.GH_PAT }}
 
       - name: Install yq
         run: |
