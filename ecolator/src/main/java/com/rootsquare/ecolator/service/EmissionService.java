@@ -12,13 +12,19 @@ public class EmissionService {
 
     public EmissionResponse calculate(EmissionRequest request) {
 
-        // Example factors
-        double cityTransportFactor = 0.18;
-        double outsideCityTransportFactor = 0.25;
         double electricityFactor = 0.50;
+        double fuelEmissionFactor = calculateFuelEmissionFactor(request.getFuelType());
 
-        double cityCo2 = request.getCityTransportKm() * cityTransportFactor;
-        double outsideCityCo2 = request.getOutsideCityTransportKm() * outsideCityTransportFactor;
+        double cityCo2 = calculateTransportCo2(
+                request.getCityTransportKm(),
+                request.getCityFuelLitersPer100Km(),
+                fuelEmissionFactor
+        );
+        double outsideCityCo2 = calculateTransportCo2(
+                request.getOutsideCityTransportKm(),
+                request.getOutsideCityFuelLitersPer100Km(),
+                fuelEmissionFactor
+        );
         double electricityCo2 = request.getElectricityKwh() * electricityFactor;
 
         double dietCo2 = calculateDietImpact(request.getDiet());
@@ -34,6 +40,10 @@ public class EmissionService {
 
         if (request.getOutsideCityTransportKm() > 150) {
             recommendations.add("Try reducing long-distance car travel or using shared transport for trips outside the city.");
+        }
+
+        if (request.getCityFuelLitersPer100Km() > 9 || request.getOutsideCityFuelLitersPer100Km() > 7) {
+            recommendations.add("Your car fuel consumption is relatively high. Smoother driving or a more efficient vehicle could lower emissions.");
         }
 
         if ("omnivore".equalsIgnoreCase(request.getDiet())) {
@@ -55,6 +65,24 @@ public class EmissionService {
         System.out.println("Calculated CO2: " + totalCo2 + " kg/year, Eco: " + eco + ", Percentile: " + percentile);
 
         return new EmissionResponse(totalCo2, eco, percentile, recommendations);
+    }
+
+    private double calculateTransportCo2(double distanceKm, double litersPer100Km, double fuelEmissionFactor) {
+        double litersUsed = (distanceKm * litersPer100Km) / 100.0;
+        return litersUsed * fuelEmissionFactor;
+    }
+
+    private double calculateFuelEmissionFactor(String fuelType) {
+        if (fuelType == null) {
+            return 2.31;
+        }
+
+        return switch (fuelType.toLowerCase()) {
+            case "diesel" -> 2.68;
+            case "lpg" -> 1.51;
+            case "petrol" -> 2.31;
+            default -> 2.31;
+        };
     }
 
     private double calculateDietImpact(String diet) {

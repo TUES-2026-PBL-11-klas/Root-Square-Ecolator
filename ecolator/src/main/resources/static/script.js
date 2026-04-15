@@ -10,12 +10,18 @@ if (footprintForm) {
 
     const cityTransportKm = parseFloat(document.getElementById("cityTransportKm").value);
     const outsideCityTransportKm = parseFloat(document.getElementById("outsideCityTransportKm").value);
+    const cityFuelLitersPer100Km = parseFloat(document.getElementById("cityFuelLitersPer100Km").value);
+    const outsideCityFuelLitersPer100Km = parseFloat(document.getElementById("outsideCityFuelLitersPer100Km").value);
+    const fuelType = document.getElementById("fuelType").value;
     const diet = document.getElementById("diet").value;
     const electricityKwh = parseFloat(document.getElementById("electricityKwh").value);
 
     const requestData = {
       cityTransportKm,
       outsideCityTransportKm,
+      cityFuelLitersPer100Km,
+      outsideCityFuelLitersPer100Km,
+      fuelType,
       diet,
       electricityKwh
     };

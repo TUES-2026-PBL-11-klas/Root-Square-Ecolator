@@ -4,6 +4,9 @@ public class EmissionRequest {
 
     private double cityTransportKm;
     private double outsideCityTransportKm;
+    private double cityFuelLitersPer100Km;
+    private double outsideCityFuelLitersPer100Km;
+    private String fuelType;
     private String diet;
     private double electricityKwh;
 
@@ -21,6 +24,30 @@ public class EmissionRequest {
 
     public void setOutsideCityTransportKm(double outsideCityTransportKm) {
         this.outsideCityTransportKm = outsideCityTransportKm;
+    }
+
+    public double getCityFuelLitersPer100Km() {
+        return cityFuelLitersPer100Km;
+    }
+
+    public void setCityFuelLitersPer100Km(double cityFuelLitersPer100Km) {
+        this.cityFuelLitersPer100Km = cityFuelLitersPer100Km;
+    }
+
+    public double getOutsideCityFuelLitersPer100Km() {
+        return outsideCityFuelLitersPer100Km;
+    }
+
+    public void setOutsideCityFuelLitersPer100Km(double outsideCityFuelLitersPer100Km) {
+        this.outsideCityFuelLitersPer100Km = outsideCityFuelLitersPer100Km;
+    }
+
+    public String getFuelType() {
+        return fuelType;
+    }
+
+    public void setFuelType(String fuelType) {
+        this.fuelType = fuelType;
     }
 
     public String getDiet() {

@@ -49,6 +49,25 @@
         </label>
 
         <label>
+          City Car Fuel Use (L/100km):
+          <input type="number" id="cityFuelLitersPer100Km" min="0" step="0.1" required>
+        </label>
+
+        <label>
+          Outside-City Car Fuel Use (L/100km):
+          <input type="number" id="outsideCityFuelLitersPer100Km" min="0" step="0.1" required>
+        </label>
+
+        <label>
+          Car Fuel Type:
+          <select id="fuelType">
+            <option value="petrol">Petrol</option>
+            <option value="diesel">Diesel</option>
+            <option value="lpg">LPG</option>
+          </select>
+        </label>
+
+        <label>
           Diet:
           <select id="diet">
             <option value="omnivore">Omnivore</option>
@@ -66,13 +85,6 @@
       </form>
     </section>
 
-    <section class="result-section" id="resultSection">
-      <h2>Your Carbon Footprint:</h2>
-      <p id="co2Result"></p>
-      <p id="ecoResult"></p>
-      <h3>Recommendations:</h3>
-      <ul id="recommendations"></ul>
-    </section>
   </main>
 
   <footer>
