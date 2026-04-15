@@ -57,6 +57,7 @@ jobs:
         with:
           ref: docker-k8s
           path: docker-k8s
+          fetch-depth: 0
 
       - name: Update Eco Impact Helm values
         run: |
