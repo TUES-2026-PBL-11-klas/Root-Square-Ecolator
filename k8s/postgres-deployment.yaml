@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: postgres
+  namespace: ecolator
 spec:
   replicas: 1
   selector:
@@ -19,7 +20,7 @@ spec:
             - containerPort: 5432
           envFrom:
             - secretRef:
-              name: postgres-secret
+                name: postgres-secret
           resources:
             requests:
               cpu: "500m"
