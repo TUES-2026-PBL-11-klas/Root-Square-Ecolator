@@ -3,4 +3,4 @@ name: emissions-chart
 description: Helm chart for Ecolator -> Emissions Calculator Microservice
 type: application
 version: 0.1.0
-appVersion: "1.0.5"
+appVersion: "1.0.7"
