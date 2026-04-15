@@ -51,3 +51,26 @@ jobs:
           helm template eco-impact ./ecolator-chart/charts/eco-impact \
             --set dockerHubUsername=${{ secrets.DOCKERHUB_USERNAME }} \
             --set ecoImpact.image.tag=${{ steps.version.outputs.VERSION }}
+
+      - name: Checkout docker-k8s branch
+        uses: actions/checkout@v4
+        with:
+          ref: docker-k8s
+          path: docker-k8s
+
+      - name: Update Eco Impact Helm values
+        run: |
+          cd docker-k8s/ecolator-chart
+
+          sed -i "s|tag: .*|tag: v1.0.${GITHUB_RUN_NUMBER}|" values.yaml
+
+      - name: Commit and push Helm update
+        run: |
+          cd docker-k8s
+
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+          git add ecolator-chart/values.yaml
+          git commit -m "Eco Impact: update image tag to v1.0.${GITHUB_RUN_NUMBER}" || echo "No changes"
+          git push
