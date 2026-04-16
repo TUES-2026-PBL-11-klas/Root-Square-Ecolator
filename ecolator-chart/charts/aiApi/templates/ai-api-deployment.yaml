@@ -33,13 +33,13 @@ spec:
             httpGet:
               path: /actuator/health/liveness
               port: {{ .Values.aiApi.port }}
-            initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
-            periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
-            failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
+            initialDelaySeconds: {{ .Values.aiApi.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.aiApi.livenessProbe.periodSeconds }}
+            failureThreshold: {{ .Values.aiApi.livenessProbe.failureThreshold }}
           readinessProbe:
             httpGet:
               path: /actuator/health/readiness
               port: {{ .Values.aiApi.port }}
-            initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
-            periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
-            failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
+            initialDelaySeconds: {{ .Values.aiApi.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.aiApi.readinessProbe.periodSeconds }}
+            failureThreshold: {{ .Values.aiApi.readinessProbe.failureThreshold }}

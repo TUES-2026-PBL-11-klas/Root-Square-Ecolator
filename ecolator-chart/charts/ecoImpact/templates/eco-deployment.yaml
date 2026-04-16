@@ -33,13 +33,13 @@ spec:
             httpGet:
               path: /actuator/health/liveness
               port: {{ .Values.ecoImpact.port }}
-            initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
-            periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
-            failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
+            initialDelaySeconds: {{ .Values.ecoImpact.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.ecoImpact.livenessProbe.periodSeconds }}
+            failureThreshold: {{ .Values.ecoImpact.livenessProbe.failureThreshold }}
           readinessProbe:
             httpGet:
               path: /actuator/health/readiness
               port: {{ .Values.ecoImpact.port }}
-            initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
-            periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
-            failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
+            initialDelaySeconds: {{ .Values.ecoImpact.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.ecoImpact.readinessProbe.periodSeconds }}
+            failureThreshold: {{ .Values.ecoImpact.readinessProbe.failureThreshold }}
