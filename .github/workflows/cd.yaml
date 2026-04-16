@@ -20,4 +20,4 @@ jobs:
 
       - name: Helm upgrade
         run: |
-          helm upgrade ecolator-chart ./ecolator-chart -n ecolator
+          helm upgrade --install ecolator-chart ./ecolator-chart -n ecolator --create-namespace
