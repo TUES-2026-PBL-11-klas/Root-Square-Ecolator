@@ -6,6 +6,9 @@ on:
       - AI-car-fuel-consumption
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
