@@ -1,7 +1,7 @@
 dockerHubUsername: viktorsirakov08
 ecoImpact:
   image: eco-impact
-  tag: v1.0.29
+  tag: v1.0.30
   replicas: 2
   port: 8080
   resources:
