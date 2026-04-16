@@ -12,3 +12,7 @@ dependencies:
   - name: aiApi
     version: 0.1.0
     repository: "file://charts/aiApi"
+
+  - name: postgres
+    version: 0.1.0
+    repository: "file://charts/postgres"
