@@ -1,4 +1,5 @@
 dockerHubUsername: viktorsirakov08
+
 ecoImpact:
   image: eco-impact
   tag: v1.0.13
@@ -11,11 +12,12 @@ ecoImpact:
     limits:
       cpu: 500m
       memory: 512Mi
+
 aiApi:
   image: ai-api
   tag: v1.0.9
   replicas: 2
-  port: 8081
+  port: 8085
   resources:
     requests:
       cpu: 200m
