@@ -61,7 +61,7 @@ jobs:
       - name: Update AI API Helm values
         run: |
           cd docker-k8s/ecolator-chart
-          yq -i ".aiApi.image.tag = \"${{ steps.version.outputs.VERSION }}\"" values.yaml
+          yq -i ".aiApi.tag = \"${{ steps.version.outputs.VERSION }}\"" values.yaml
 
       - name: Commit and push Helm update
         run: |
