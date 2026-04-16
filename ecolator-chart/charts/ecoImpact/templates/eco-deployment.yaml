@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: eco-impact
-          image: "{{ .Values.dockerHubUsername }}/{{ .Values.ecoImpact.image.repository }}:{{ .Values.ecoImpact.image.tag }}"
+          image: "{{ .Values.dockerHubUsername }}/{{ .Values.ecoImpact.image }}:{{ .Values.ecoImpact.image.tag }}"
           imagePullPolicy: Always
           ports:
             - containerPort: {{ .Values.ecoImpact.port }}
