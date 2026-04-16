@@ -1,14 +1,24 @@
 package com.rootsquare.ecolator.service;
 
-import com.rootsquare.ecolator.dto.EmissionRequest;
-import com.rootsquare.ecolator.dto.EmissionResponse;
-import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import com.rootsquare.ecolator.model.UserPollution;
+import com.rootsquare.ecolator.repository.UserPollutionRepository;
+
+import org.springframework.stereotype.Service;
+
+import com.rootsquare.ecolator.dto.EmissionRequest;
+import com.rootsquare.ecolator.dto.EmissionResponse;
+
 @Service
 public class EmissionService {
+
+    private final UserPollutionRepository userPollutionRepository;
+
+    public EmissionService(UserPollutionRepository userPollutionRepository) {
+        this.userPollutionRepository = userPollutionRepository;
+    }
 
     public EmissionResponse calculate(EmissionRequest request) {
 
@@ -62,6 +72,12 @@ public class EmissionService {
         if (percentile > 99) percentile = 99;
 
         System.out.println("Calculated CO2: " + totalCo2 + " kg/year, Eco: " + eco + ", Percentile: " + percentile);
+
+        userPollutionRepository.save(UserPollution.builder()
+                .transportValue((float) (cityCo2 + outsideCityCo2))
+                .waterValue((float) electricityCo2)
+                .totalMonthlyCoefficient((float) totalCo2)
+                .build());
 
         return new EmissionResponse(totalCo2, eco, percentile, recommendations);
     }
