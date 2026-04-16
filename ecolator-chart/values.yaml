@@ -13,7 +13,7 @@ ecoImpact:
       memory: 512Mi
 aiApi:
   image: ai-api
-  tag: v1.0.14
+  tag: v1.0.15
   replicas: 2
   port: 8085
   resources:
