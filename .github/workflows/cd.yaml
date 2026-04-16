@@ -1,0 +1,23 @@
+name: Deploy to Kubernetes
+
+on:
+  push:
+    branches:
+      - docker-k8s
+    paths:
+      - 'ecolator-chart/values.yaml'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: [self-hosted, Windows, X64]
+
+    steps:
+      - name: Checkout docker-k8s branch
+        uses: actions/checkout@v4
+        with:
+          ref: docker-k8s
+
+      - name: Helm upgrade
+        run: |
+          helm upgrade ecolator-chart ./ecolator-chart -n ecolator
