@@ -18,6 +18,10 @@ jobs:
         with:
           ref: docker-k8s
 
+      - name: Set PowerShell execution policy
+        run: Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+        shell: powershell
+
       - name: Helm upgrade
         run: |
           helm upgrade --install ecolator-chart ./ecolator-chart -n ecolator --create-namespace
