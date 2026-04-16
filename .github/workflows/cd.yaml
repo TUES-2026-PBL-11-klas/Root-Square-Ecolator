@@ -18,6 +18,11 @@ jobs:
         with:
           ref: docker-k8s
 
-      - name: Helm upgrade
-        run: helm upgrade --install ecolator ./ecolator-chart -n ecolator --create-namespace
+      - name: Helm upgrade (Windows)
+        if: runner.os == 'Windows'
+        run: C:\Windows\System32\helm.exe upgrade --install ecolator ./ecolator-chart -n ecolator --create-namespace
         shell: cmd
+
+      - name: Helm upgrade (Mac/Linux)
+        if: runner.os != 'Windows'
+        run: helm upgrade --install ecolator ./ecolator-chart -n ecolator --create-namespace
