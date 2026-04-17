@@ -9,5 +9,5 @@ spec:
     app: ai-api
   ports:
     - name: ai-api
-      port: {{ .Values.aiApi.port }}
-      targetPort: {{ .Values.aiApi.port }}
+      port: {{ .Values.port }}
+      targetPort: {{ .Values.port }}
