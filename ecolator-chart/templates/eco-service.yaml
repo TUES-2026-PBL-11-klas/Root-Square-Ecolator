@@ -9,5 +9,5 @@ spec:
     app: eco-impact
   ports:
     - name: calc
-      port: {{ .Values.port }}
-      targetPort: {{ .Values.port }}
+      port: {{ .Values.ecoImpact.port }}
+      targetPort: {{ .Values.ecoImpact.port }}
