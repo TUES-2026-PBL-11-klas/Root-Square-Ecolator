@@ -10,7 +10,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: [self-hosted, Windows, X64]
+    runs-on: self-hosted
 
     steps:
       - name: Checkout docker-k8s branch
@@ -30,7 +30,4 @@ jobs:
       - name: Helm upgrade (Mac/Linux)
         if: runner.os != 'Windows'
         run: >
-          helm upgrade --install ecolator ./ecolator-chart
-          -n ecolator --create-namespace
-          -f ./ecolator-chart/values.yaml
-          --atomic --cleanup-on-fail
+          helm upgrade --install ecolator ./ecolator-chart -n ecolator --create-namespace -f ./ecolator-chart/values.yaml --atomic --cleanup-on-fail
