@@ -2,6 +2,7 @@ dockerHubUsername: viktorsirakov08
 
 aiApi:
   image: ai-api
+  tag: v1.0.18
   replicas: 2
   port: 8085
   resources:

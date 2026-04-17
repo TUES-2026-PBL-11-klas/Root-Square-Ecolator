@@ -6,6 +6,8 @@ on:
       - docker-k8s
     paths:
       - 'ecolator-chart/values.yaml'
+      - 'ecolator-chart/charts/ecoImpact/values.yaml'
+      - 'ecolator-chart/charts/aiApi/values.yaml'
   workflow_dispatch:
 
 jobs:
@@ -24,6 +26,8 @@ jobs:
           C:\Windows\System32\helm.exe upgrade --install ecolator ./ecolator-chart
           -n ecolator --create-namespace
           -f ./ecolator-chart/values.yaml
+          -f ./ecolator-chart/charts/ecoImpact/values.yaml
+          -f ./ecolator-chart/charts/aiApi/values.yaml
         shell: cmd
 
       - name: Helm upgrade (Mac/Linux)
@@ -32,3 +36,5 @@ jobs:
           helm upgrade --install ecolator ./ecolator-chart
           -n ecolator --create-namespace
           -f ./ecolator-chart/values.yaml
+          -f ./ecolator-chart/charts/ecoImpact/values.yaml
+          -f ./ecolator-chart/charts/aiApi/values.yaml
