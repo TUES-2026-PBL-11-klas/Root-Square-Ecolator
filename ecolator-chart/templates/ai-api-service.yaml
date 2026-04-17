@@ -9,5 +9,5 @@ spec:
     app: ai-api
   ports:
     - name: ai-api
-      port: {{ .Values.port }}
-      targetPort: {{ .Values.port }}
+      port: {{ .Values.ecoImpact.port }}
+      targetPort: {{ .Values.ecoImpact.port }}
