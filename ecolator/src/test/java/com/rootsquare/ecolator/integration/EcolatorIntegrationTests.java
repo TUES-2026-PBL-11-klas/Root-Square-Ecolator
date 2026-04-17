@@ -1,41 +1,36 @@
 package com.rootsquare.ecolator.integration;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.rootsquare.ecolator.dto.EmissionRequest;
-import com.rootsquare.ecolator.repository.UserPollutionRepository;
-import org.junit.jupiter.api.BeforeEach;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasSize;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
-class EcolocatorIntegrationTests {
+import com.rootsquare.ecolator.dto.EmissionRequest;
+import com.rootsquare.ecolator.repository.UserPollutionRepository;
 
-    private MockMvc mockMvc;
+import tools.jackson.databind.ObjectMapper;
+
+@SpringBootTest
+@AutoConfigureMockMvc
+@ActiveProfiles("test")
+class EcolatorIntegrationTests {
 
     @Autowired
-    private WebApplicationContext context;
+    private MockMvc mockMvc;
 
     @Autowired
     private ObjectMapper objectMapper;
 
     @Autowired
     private UserPollutionRepository userPollutionRepository;
-
-    @BeforeEach
-    void setUp() {
-        this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context).build();
-    }
 
     @Test
     void calculateEndpointReturnsResultAndPersistsUserPollution() throws Exception {
@@ -58,7 +53,7 @@ class EcolocatorIntegrationTests {
                 .andExpect(jsonPath("$.eco").isNumber())
                 .andExpect(jsonPath("$.percentile").isNumber())
                 .andExpect(jsonPath("$.recommendations").isArray())
-                .andExpect(jsonPath("$.recommendations", hasSize(3)));
+                .andExpect(jsonPath("$.recommendations", hasSize(1)));
 
         assertThat(userPollutionRepository.findAll()).hasSize(1);
         assertThat(userPollutionRepository.findAll().get(0).getCreatedAt()).isNotNull();

@@ -1,5 +1,12 @@
 package com.rootsquare.ecolator.integration;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.jdbc.test.autoconfigure.AutoConfigureTestDatabase;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+
 import com.rootsquare.ecolator.model.DietTypes;
 import com.rootsquare.ecolator.model.PollutionConstant;
 import com.rootsquare.ecolator.model.TransportType;
@@ -10,13 +17,10 @@ import com.rootsquare.ecolator.repository.PollutionConstantRepository;
 import com.rootsquare.ecolator.repository.TransportTypeRepository;
 import com.rootsquare.ecolator.repository.UserPollutionRepository;
 import com.rootsquare.ecolator.repository.WaterBottleTypeRepository;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
+@ActiveProfiles("test")
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class JpaRepositoryIntegrationTest {
 
     @Autowired
