@@ -23,6 +23,9 @@ jobs:
           VERSION=v1.0.${GITHUB_RUN_NUMBER}
           echo "VERSION=$VERSION" >> "$GITHUB_OUTPUT"
 
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
@@ -38,6 +41,7 @@ jobs:
           context: ./ecolator
           file: ./ecolator/Dockerfile
           push: true
+          platforms: linux/amd64,linux/arm64
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/eco-impact:${{ steps.version.outputs.VERSION }}
             ${{ secrets.DOCKERHUB_USERNAME }}/eco-impact:latest
