@@ -16,3 +16,7 @@ dependencies:
   - name: postgres
     version: 0.1.0
     repository: "file://charts/postgres"
+
+  - name: iam
+    version: 0.1.0
+    repository: "file://charts/iam"

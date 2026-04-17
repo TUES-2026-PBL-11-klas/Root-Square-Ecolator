@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: iam
+  namespace: ecolator
+spec:
+  type: ClusterIP
+  selector:
+    app: iam
+  ports:
+    - name: iam
+      port: {{ .Values.iam.port }}
+      targetPort: {{ .Values.iam.port }}

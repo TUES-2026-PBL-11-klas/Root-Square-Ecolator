@@ -1,0 +1,7 @@
+dockerHubUsername: viktorsirakov08
+
+iam:
+  image: iam-service
+  tag: v1.0.0
+  replicas: 1
+  port: 8080
