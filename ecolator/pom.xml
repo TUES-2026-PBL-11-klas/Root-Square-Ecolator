@@ -107,6 +107,11 @@
 			<artifactId>opentelemetry-jdbc</artifactId>
 			<version>1.33.5-alpha</version> 
 		</dependency>
+		<dependency>
+			<groupId>io.opentelemetry.instrumentation</groupId>
+			<artifactId>opentelemetry-logback-appender-1.0</artifactId>
+			<version>1.33.5-alpha</version>
+		</dependency>
 	</dependencies>
 
 	<build>

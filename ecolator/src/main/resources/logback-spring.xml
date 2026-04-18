@@ -8,10 +8,6 @@
             <captureExperimentalAttributes>true</captureExperimentalAttributes>
             <captureCodeAttributes>true</captureCodeAttributes>
         </appender>
-
-        <bean class="io.opentelemetry.instrumentation.logback.v1_0.OpenTelemetryAppender" init-method="start">
-            <property name="endpoint" value="http://alloy:4318/v1/logs" />
-        </bean>
     </springProfile>
 
     <root level="INFO">
