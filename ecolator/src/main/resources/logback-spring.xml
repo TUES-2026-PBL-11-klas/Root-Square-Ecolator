@@ -4,7 +4,7 @@
     <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
 
     <springProfile name="k8s">
-        <appender name="OTLP" class="io.opentelemetry.instrumentation.logback.v1_0.OpenTelemetryAppender">
+        <appender name="OTLP" class="io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender">
             <captureExperimentalAttributes>true</captureExperimentalAttributes>
             <captureCodeAttributes>true</captureCodeAttributes>
         </appender>
