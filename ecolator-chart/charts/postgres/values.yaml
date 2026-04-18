@@ -1,0 +1,33 @@
+dockerHubUsername: viktorsirakov08
+
+postgres:
+  image: postgres
+  tag: "15"
+  port: 5432
+  secretName: db-secret
+  storage: 1Gi
+  resources:
+    requests:
+      cpu: 500m
+      memory: 512Mi
+    limits:
+      cpu: "1"
+      memory: 1Gi
+  livenessProbe:
+    exec:
+      command:
+        - pg_isready
+        - -U
+        - ecolator
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    failureThreshold: 3
+  readinessProbe:
+    exec:
+      command:
+        - pg_isready
+        - -U
+        - ecolator
+    initialDelaySeconds: 10
+    periodSeconds: 5
+    failureThreshold: 3

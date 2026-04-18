@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eco-impact
+  namespace: ecolator
+spec:
+  replicas: {{ .Values.ecoImpact.replicas }}
+  selector:
+    matchLabels:
+      app: eco-impact
+  template:
+    metadata:
+      labels:
+        app: eco-impact
+    spec:
+      containers:
+        - name: eco-impact
+          image: "{{ .Values.dockerHubUsername }}/{{ .Values.ecoImpact.image }}:{{ .Values.ecoImpact.tag }}"
+          imagePullPolicy: Always
+          ports:
+            - containerPort: {{ .Values.ecoImpact.port }}
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: "k8s"
+
+            - name: SPRING_DATASOURCE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: url
+
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: username
+
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: password
+
+          resources:
+            requests:
+              cpu: {{ .Values.ecoImpact.resources.requests.cpu }}
+              memory: {{ .Values.ecoImpact.resources.requests.memory }}
+            limits:
+              cpu: {{ .Values.ecoImpact.resources.limits.cpu }}
+              memory: {{ .Values.ecoImpact.resources.limits.memory }}
+
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: {{ .Values.ecoImpact.port }}
+            initialDelaySeconds: {{ .Values.ecoImpact.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.ecoImpact.livenessProbe.periodSeconds }}
+            failureThreshold: {{ .Values.ecoImpact.livenessProbe.failureThreshold }}
+
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: {{ .Values.ecoImpact.port }}
+            initialDelaySeconds: {{ .Values.ecoImpact.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.ecoImpact.readinessProbe.periodSeconds }}
+            failureThreshold: {{ .Values.ecoImpact.readinessProbe.failureThreshold }}
