@@ -2,32 +2,16 @@ name: Deploy to Kubernetes
 
 on:
   push:
-    branches:
-      - docker-k8s
-    paths:
-      - 'ecolator-chart/values.yaml'
+    branches: [main]
+    paths: ['ecolator-chart/values.yaml']
   workflow_dispatch:
 
 jobs:
   deploy:
     runs-on: self-hosted
-
     steps:
-      - name: Checkout docker-k8s branch
+      - name: Checkout main branch
         uses: actions/checkout@v4
-        with:
-          ref: docker-k8s
 
-      - name: Helm upgrade (Windows)
-        if: runner.os == 'Windows'
-        run: >
-          C:\Windows\System32\helm.exe upgrade --install ecolator ./ecolator-chart
-          -n ecolator --create-namespace
-          -f ./ecolator-chart/values.yaml
-          --atomic --cleanup-on-fail
-        shell: cmd
-
-      - name: Helm upgrade (Mac/Linux)
-        if: runner.os != 'Windows'
-        run: >
-          helm upgrade --install ecolator ./ecolator-chart -n ecolator --create-namespace -f ./ecolator-chart/values.yaml --atomic --cleanup-on-fail
+      - name: Helm upgrade
+        run: helm upgrade --install ecolator ./ecolator-chart -n ecolator --create-namespace -f ./ecolator-chart/values.yaml --atomic --cleanup-on-fail
