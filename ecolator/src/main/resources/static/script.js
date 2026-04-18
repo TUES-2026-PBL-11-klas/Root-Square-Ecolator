@@ -127,7 +127,7 @@ if (footprintForm) {
     };
 
     try {
-      const response = await fetch("/api/emissions/calculate", {
+      const response = await fetch("http://localhost:3001/api/emissions/calculate", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
