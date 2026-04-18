@@ -88,10 +88,6 @@
 
 ![uml_algorithm](diagrams/uml_algorithm.png)
 
-### Class диаграма (описва алгоритъма)
-
-![uml_classes](diagrams/uml_class_algorithm.png) 
-
 - Примерен вариант за методи, може да претърпи промени
 
 ## 4. Функционалност на приложението
