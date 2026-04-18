@@ -4,7 +4,7 @@ postgres:
   image: postgres
   tag: "15"
   port: 5432
-  secretName: ecolator-db-secret
+  secretName: db-secret
   storage: 1Gi
   resources:
     requests:

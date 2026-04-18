@@ -21,14 +21,17 @@ spec:
             - containerPort: {{ .Values.iam.port }}
           env:
             - name: SPRING_DATASOURCE_URL
-              value: jdbc:postgresql://postgres:5432/ecolator
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: url
             - name: SPRING_DATASOURCE_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: ecolator-db-secret
-                  key: POSTGRES_USER
+                  name: db-secret
+                  key: username
             - name: SPRING_DATASOURCE_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: ecolator-db-secret
-                  key: POSTGRES_PASSWORD
+                  name: db-secret
+                  key: password
