@@ -1,0 +1,16 @@
+target/*
+!target/ai-api.jar
+
+.git
+.gitignore
+
+*.log
+
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/
+.idea/
+
+Dockerfile
+docker-compose.yml
