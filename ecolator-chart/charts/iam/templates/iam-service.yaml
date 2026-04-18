@@ -4,10 +4,11 @@ metadata:
   name: iam
   namespace: ecolator
 spec:
-  type: ClusterIP
+  type: NodePort
   selector:
     app: iam
   ports:
     - name: iam
       port: {{ .Values.iam.port }}
       targetPort: {{ .Values.iam.port }}
+      nodePort: {{ .Values.iam.nodePort }}

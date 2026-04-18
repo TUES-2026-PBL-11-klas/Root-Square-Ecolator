@@ -179,6 +179,77 @@
     registerForm.classList.add("active");
     loginForm.classList.remove("active");
   });
+
+  loginForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const status = document.getElementById("loginStatus");
+    status.textContent = "Signing in...";
+    status.className = "status info";
+
+    try {
+      const response = await fetch("http://localhost:30081/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: document.getElementById("loginEmail").value,
+          password: document.getElementById("loginPassword").value
+        })
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.accessToken) {
+        sessionStorage.setItem("authToken", data.accessToken);
+        window.location.href = "info.html";
+      } else {
+        status.textContent = data.message || "Invalid credentials.";
+        status.className = "status error";
+      }
+    } catch (err) {
+      status.textContent = "Could not connect to the server.";
+      status.className = "status error";
+    }
+  });
+
+  registerForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const status = document.getElementById("registerStatus");
+    const password = document.getElementById("regPassword").value;
+    const confirm = document.getElementById("regPassword2").value;
+
+    if (password !== confirm) {
+      status.textContent = "Passwords do not match.";
+      status.className = "status error";
+      return;
+    }
+
+    status.textContent = "Registering...";
+    status.className = "status info";
+
+    try {
+      const response = await fetch("http://localhost:30081/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: document.getElementById("regEmail").value,
+          password
+        })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        status.textContent = "Registration successful! Wait for admin approval before logging in.";
+        status.className = "status success";
+      } else {
+        status.textContent = data.message || "Registration failed.";
+        status.className = "status error";
+      }
+    } catch (err) {
+      status.textContent = "Could not connect to the server.";
+      status.className = "status error";
+    }
+  });
 </script>
 
 </body>
