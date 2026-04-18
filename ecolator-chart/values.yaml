@@ -49,7 +49,7 @@ postgres:
   image: postgres
   tag: "15"
   port: 5432
-  secretName: ecolator-db-secret
+  secretName: db-secret
   storage: 1Gi
   resources:
     requests:
@@ -80,4 +80,12 @@ iam:
   image: iam-service
   tag: v1.0.0
   replicas: 1
-  port: 8080
+  port: 8081
+grafana:
+  grafana.ini:
+    server:
+      domain: localhost
+      root_url: http://localhost:3000
+    security:
+      cookie_samesite: lax
+      cookie_secure: false
