@@ -179,6 +179,77 @@
     registerForm.classList.add("active");
     loginForm.classList.remove("active");
   });
+
+  loginForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const email = document.getElementById("loginEmail").value;
+    const password = document.getElementById("loginPassword").value;
+    const status = document.getElementById("loginStatus");
+
+    status.className = "status info";
+    status.textContent = "Checking credentials...";
+
+    try {
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password })
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        if(data.token) localStorage.setItem("token", data.token);
+        
+        status.className = "status success";
+        status.textContent = "Success! Entering...";
+        setTimeout(() => window.location.href = "info.html", 1000);
+      } else {
+        status.className = "status error";
+        status.textContent = "Invalid email or password.";
+      }
+    } catch (err) {
+      status.className = "status error";
+      status.textContent = "Server unreachable.";
+    }
+  });
+
+  registerForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const email = document.getElementById("regEmail").value;
+    const pass1 = document.getElementById("regPassword").value;
+    const pass2 = document.getElementById("regPassword2").value;
+    const status = document.getElementById("registerStatus");
+
+    if (pass1 !== pass2) {
+      status.className = "status error";
+      status.textContent = "Passwords do not match.";
+      return;
+    }
+
+    status.className = "status info";
+    status.textContent = "Creating account...";
+
+    try {
+      const response = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password: pass1 })
+      });
+
+      if (response.ok) {
+        status.className = "status success";
+        status.textContent = "Account created! Please Sign In.";
+        setTimeout(() => tabLogin.click(), 2000);
+      } else {
+        const errorData = await response.json();
+        status.className = "status error";
+        status.textContent = errorData.message || "Registration failed.";
+      }
+    } catch (err) {
+      status.className = "status error";
+      status.textContent = "Connection error.";
+    }
+  });
 </script>
 
 </body>
