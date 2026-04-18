@@ -6,6 +6,9 @@ on:
     paths: ['ecolator-chart/values.yaml']
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   deploy:
     runs-on: self-hosted
