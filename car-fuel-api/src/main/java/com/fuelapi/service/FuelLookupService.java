@@ -35,8 +35,10 @@ public class FuelLookupService {
     }
 
     public double getFuelConsumption(String carModel) {
+        // * Build a strict prompt so the model returns a parseable numeric value.
         String prompt = buildPrompt(carModel);
 
+        // * Keep token output tiny; we only need one short numeric answer.
         GroqRequest request = new GroqRequest(
             model,
                 16,
@@ -45,6 +47,7 @@ public class FuelLookupService {
 
         log.info("Sending request to Groq API for car model: {} using model: {}", carModel, model);
 
+        // * Call Groq Chat Completions and map HTTP failures to rich runtime errors.
         GroqResponse response = webClient.post()
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + apiKey)
@@ -52,6 +55,7 @@ public class FuelLookupService {
                 .retrieve()
                 .onStatus(HttpStatusCode::isError, clientResponse ->
                     clientResponse.bodyToMono(String.class).flatMap(errorBody -> {
+                        // ! Include status + body in logs to diagnose prompt/auth/quota issues quickly.
                         log.error("Groq API error - Status: {}, Body: {}", clientResponse.statusCode(), errorBody);
                         return Mono.error(new RuntimeException("Groq API error " + clientResponse.statusCode() + ": " + errorBody));
                     })
@@ -60,9 +64,11 @@ public class FuelLookupService {
                 .block();
 
         if (response == null) {
+            // ! Defensive guard: block() may return null if no body is provided.
             throw new RuntimeException("No response from Groq API");
         }
 
+        // * Parse the first assistant message as the fuel consumption value.
         String rawText = response.firstText().trim();
         log.info("Groq raw response: {}", rawText);
         return parseNumber(rawText, carModel);
@@ -82,8 +88,10 @@ public class FuelLookupService {
     }
 
     private double parseNumber(String text, String carModel) {
+        // * Strip everything except digits and decimal separators.
         String cleaned = text.replaceAll("[^0-9.,]", "").replace(",", ".");
         if (cleaned.chars().filter(c -> c == '.').count() > 1) {
+            // ! If the model returns multiple decimals, keep the first numeric segment only.
             int secondDot = cleaned.indexOf('.', cleaned.indexOf('.') + 1);
             cleaned = cleaned.substring(0, secondDot);
         }

@@ -1,9 +1,9 @@
 package com.fuelapi.model;
 
-// ─── Inbound ───────────────────────────────────────────────────────────────
+// * Inbound DTO accepted by /api/fuel endpoints.
 
 public class FuelRequest {
-    /** e.g. "Toyota Corolla 2020 1.8L" */
+    // * Free-text car model used to query consumption from AI provider.
     private String carModel;
 
     public String getCarModel() {

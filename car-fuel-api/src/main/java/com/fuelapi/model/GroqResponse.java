@@ -4,6 +4,7 @@ import java.util.List;
 
 public class GroqResponse {
 
+    // * API may return multiple choices; service currently reads the first one.
     private List<Choice> choices;
 
     public static class Choice {
@@ -39,6 +40,7 @@ public class GroqResponse {
     }
 
     public String firstText() {
+        // ! Defensive fallback keeps parsing logic safe when response shape is partial.
         if (choices == null || choices.isEmpty()) return "";
         Choice choice = choices.get(0);
         if (choice.getMessage() == null) return "";
