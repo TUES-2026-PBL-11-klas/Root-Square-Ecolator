@@ -89,3 +89,5 @@ grafana:
     security:
       cookie_samesite: lax
       cookie_secure: false
+
+      
