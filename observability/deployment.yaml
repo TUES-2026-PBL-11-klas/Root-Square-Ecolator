@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alloy
+  namespace: ecolator
+spec:
+  replicas: 1
+  selector: 
+    matchLabels:
+      app: alloy
+  template:
+    metadata:
+      labels:
+        app: alloy
+    spec:
+      containers:
+        - name: alloy
+          image: grafana/alloy:latest
+          args:
+            - run 
+            - /etc/alloy/config.alloy
+          volumeMounts:
+            - name: config
+              mountPath: /etc/alloy
+          env:
+            - name: GRAFANA_USER
+              valueFrom:
+                secretKeyRef:
+                  name: alloy-secrets
+                  key: GRAFANA_USER
+            - name: GRAFANA_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: alloy-secrets
+                  key: GRAFANA_API_KEY
+            - name: GRAFANA_OTLP_URL
+              valueFrom:
+                secretKeyRef:
+                  name: alloy-secrets
+                  key: GRAFANA_OTLP_URL
+            - name: GRAFANA_BASIC_AUTH
+              valueFrom:
+                secretKeyRef:
+                  name: alloy-secrets
+                  key: GRAFANA_BASIC_AUTH
+            - name: OTEL_SERVICE_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: alloy-secrets
+                  key: OTEL_SERVICE_NAME
+      volumes:
+        - name: config
+          configMap:
+            name: alloy-config

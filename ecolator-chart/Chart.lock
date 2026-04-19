@@ -1,0 +1,9 @@
+dependencies:
+- name: ecoImpact
+  repository: file://charts/ecoImpact
+  version: 0.1.0
+- name: aiApi
+  repository: file://charts/aiApi
+  version: 0.1.0
+digest: sha256:8e70a0a133d2535d203330416daefb6bfc933a671a63c8d4cf49d4595a26ef3b
+generated: "2026-04-15T22:10:37.873403126+03:00"

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ecolator Chatbot</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1 class="light-text">Ecolator</h1>
+  </header>
+
+  <main>
+    <section class="result-section">
+      <h2>Chatbot Handoff</h2>
+      <p id="chatbotIntro">Your calculator data is saved. A chatbot can use the note below as context.</p>
+      <div class="chatbot-note" id="chatbotNoteBox"></div>
+      <div class="wizard-actions chatbot-actions">
+        <button type="button" id="goToFeedbackButton">See My Result</button>
+        <button type="button" id="backToFormButton" class="secondary-button">Edit Info</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p class="light-text">Ecolator &copy; 2026</p>
+  </footer>
+
+  <script>
+    const savedPrompt = sessionStorage.getItem("ecolatorChatPrompt");
+    const savedResult = sessionStorage.getItem("ecolatorFeedback");
+    const noteBox = document.getElementById("chatbotNoteBox");
+    const intro = document.getElementById("chatbotIntro");
+
+    if (!savedResult) {
+      window.location.href = "info.html";
+    } else {
+      noteBox.textContent = savedPrompt && savedPrompt.trim()
+        ? savedPrompt
+        : "No extra chatbot note was added.";
+    }
+
+    document.getElementById("goToFeedbackButton").addEventListener("click", () => {
+      window.location.href = "feedback.html";
+    });
+
+    document.getElementById("backToFormButton").addEventListener("click", () => {
+      window.location.href = "info.html";
+    });
+  </script>
+</body>
+</html>

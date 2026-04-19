@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: alloy-config
+  namespace: ecolator
+data:
+  config.alloy: |
+    otelcol.receiver.otlp "default" {
+      grpc {}
+      http {
+        endpoint= "0.0.0.0:4318"
+      }
+
+      output {
+        traces  = [otelcol.processor.batch.default.input]
+        metrics = [otelcol.processor.batch.default.input]
+        logs    = [otelcol.processor.batch.default.input]
+      }
+    }
+
+    otelcol.processor.batch "default" {
+      output {
+        traces  = [otelcol.exporter.otlphttp.grafana.input]
+        metrics = [otelcol.exporter.otlphttp.grafana.input]
+        logs    = [otelcol.exporter.otlphttp.grafana.input]
+      }
+    }
+
+    otelcol.exporter.otlphttp "grafana" {
+      client {
+        endpoint = sys.env("GRAFANA_OTLP_URL")
+        auth     = otelcol.auth.basic.grafana.handler
+      }
+    }
+
+    otelcol.auth.basic "grafana" {
+      username = sys.env("GRAFANA_USER")
+      password = sys.env("GRAFANA_API_KEY")
+    }
