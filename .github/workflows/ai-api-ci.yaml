@@ -2,8 +2,8 @@ name: Build & Push AI-API Image
 
 on:
   push:
-    branches:
-      - AI-car-fuel-consumption
+    branches: [main]
+    paths: ['car-fuel-api/**']
   workflow_dispatch:
 
 permissions:
@@ -16,16 +16,14 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.PAT_TOKEN }}
 
       - name: Set version
         id: version
         run: |
-          if [ -f VERSION ]; then
-            VERSION=$(cat VERSION)
-          else
-            VERSION=v1.0.${GITHUB_RUN_NUMBER}
-          fi
-          echo "VERSION=$VERSION" >> "$GITHUB_OUTPUT"
+          [ -f VERSION ] && V=$(cat VERSION) || V=v1.0.${GITHUB_RUN_NUMBER}
+          echo "VERSION=$V" >> "$GITHUB_OUTPUT"
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -50,30 +48,18 @@ jobs:
             ${{ secrets.DOCKERHUB_USERNAME }}/ai-api:${{ steps.version.outputs.VERSION }}
             ${{ secrets.DOCKERHUB_USERNAME }}/ai-api:latest
 
-      - name: Checkout docker-k8s branch
-        uses: actions/checkout@v4
-        with:
-          ref: docker-k8s
-          path: docker-k8s
-          token: ${{ secrets.PAT_TOKEN }}
-
       - name: Install yq
         run: |
           sudo wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/bin/yq
           sudo chmod +x /usr/bin/yq
 
-      - name: Update AI API Helm values
-        run: |
-          cd docker-k8s/ecolator-chart
-          yq -i ".aiApi.tag = \"${{ steps.version.outputs.VERSION }}\"" values.yaml
+      - name: Update Helm Tag
+        run: yq -i ".aiApi.tag = \"${{ steps.version.outputs.VERSION }}\"" ecolator-chart/values.yaml
 
-      - name: Commit and push Helm update
+      - name: Commit and push
         run: |
-          cd docker-k8s
-
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
-
           git add ecolator-chart/values.yaml
-          git commit -m "AI API: update image tag to ${{ steps.version.outputs.VERSION }}" || echo "No changes"
+          git commit -m "Update AI API tag to ${{ steps.version.outputs.VERSION }}" || echo "No changes"
           git push
