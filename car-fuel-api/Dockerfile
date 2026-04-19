@@ -19,6 +19,6 @@ COPY --from=builder /build/target/*.jar app.jar
 RUN useradd -m appuser
 USER appuser
 
-EXPOSE 8085
+EXPOSE 8081
 
 ENTRYPOINT ["java", "-jar", "app.jar"]
