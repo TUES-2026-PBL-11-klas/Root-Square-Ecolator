@@ -24,6 +24,9 @@ jobs:
           [ -f VERSION ] && V=$(cat VERSION) || V=v1.0.${GITHUB_RUN_NUMBER}
           echo "VERSION=$V" >> "$GITHUB_OUTPUT"
 
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
@@ -44,6 +47,11 @@ jobs:
             ${{ secrets.DOCKERHUB_USERNAME }}/ai-api:${{ steps.version.outputs.VERSION }}
             ${{ secrets.DOCKERHUB_USERNAME }}/ai-api:latest
 
+      - name: Install yq
+        run: |
+          sudo wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/bin/yq
+          sudo chmod +x /usr/bin/yq
+
       - name: Update Helm Tag
         run: yq -i ".aiApi.tag = \"${{ steps.version.outputs.VERSION }}\"" ecolator-chart/values.yaml
 
@@ -52,5 +60,5 @@ jobs:
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
           git add ecolator-chart/values.yaml
-          git commit -m "Update AI API tag to ${{ steps.version.outputs.VERSION }}"
+          git commit -m "Update AI API tag to ${{ steps.version.outputs.VERSION }}" || echo "No changes"
           git push
