@@ -22,9 +22,11 @@ public class FuelController {
      */
     @PostMapping
     public ResponseEntity<Double> getFuelUsage(@RequestBody FuelRequest request) {
+        // ! Reject blank payloads early to avoid unnecessary downstream API calls.
         if (request.getCarModel() == null || request.getCarModel().isBlank()) {
             return ResponseEntity.badRequest().build();
         }
+        // * Delegate fuel estimation to service; controller stays transport-focused.
         double fuelUsage = fuelLookupService.getFuelConsumption(request.getCarModel());
         return ResponseEntity.ok(fuelUsage);
     }
@@ -35,6 +37,7 @@ public class FuelController {
      */
     @GetMapping
     public ResponseEntity<Double> getFuelUsageGet(@RequestParam String model) {
+        // ! Apply the same guard rails for query-parameter usage.
         if (model == null || model.isBlank()) {
             return ResponseEntity.badRequest().build();
         }

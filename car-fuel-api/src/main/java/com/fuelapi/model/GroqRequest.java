@@ -6,15 +6,20 @@ import java.util.List;
 
 public class GroqRequest {
 
+    // * Chat model identifier, e.g. llama-3.3-70b-versatile.
     private String model;
 
+    // * Groq/OpenAI-compatible field name required by the API contract.
     @JsonProperty("max_tokens")
     private int maxTokens;
 
+    // * Conversation payload; only one user message is currently sent.
     private List<Message> messages;
 
     public static class Message {
+        // * Expected values are typically user, assistant, or system.
         private String role;
+        // * Raw natural-language prompt body.
         private String content;
 
         public Message() {
