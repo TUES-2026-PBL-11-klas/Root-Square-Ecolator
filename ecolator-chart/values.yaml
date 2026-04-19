@@ -27,7 +27,7 @@ ecoImpact:
     failureThreshold: 3
 aiApi:
   image: ai-api
-  tag: v1.0.25
+  tag: v1.0.26
   replicas: 2
   port: 8085
   resources:
@@ -89,5 +89,3 @@ grafana:
     security:
       cookie_samesite: lax
       cookie_secure: false
-
-      
