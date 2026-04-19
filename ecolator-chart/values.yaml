@@ -27,7 +27,7 @@ ecoImpact:
     failureThreshold: 3
 aiApi:
   image: ai-api
-  tag: v1.0.22
+  tag: v1.0.25
   replicas: 2
   port: 8085
   resources:
